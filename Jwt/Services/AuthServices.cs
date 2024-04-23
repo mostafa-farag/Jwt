@@ -115,5 +115,21 @@ namespace Jwt.Services
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
+
+        //private async void Test()
+        //{
+        //    var user = await _userManager.FindByEmailAsync();
+
+        //    _userManager.Users.
+
+        //    var passwordToken =  _userManager.GeneratePasswordResetTokenAsync(user);
+
+
+        //    var changPasswordresult =  _userManager.ResetPasswordAsync(user, passwordToken, model.Password);
+        //    if (changPasswordresult.Succeeded)
+        //    {
+        //        return("");
+        //    }
+        //}
     }
 }
