@@ -28,6 +28,9 @@ namespace Jwt
             builder.Services.AddHttpClient();
             builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
             builder.Services.AddScoped<IAuthServices, AuthServices>();
+            builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
+
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

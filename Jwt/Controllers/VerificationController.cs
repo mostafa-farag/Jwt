@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -73,92 +74,105 @@ public class VerificationController : ControllerBase
         
     }
 
- [HttpGet("Code")]
-    public async Task<ActionResult<VerificationCheckRequest>> GetLastCode( string code)
-    {
-        var user = await _manager.FindByEmailAsync(code);
+ //[HttpGet("Code")]
+ //   public async Task<ActionResult<VerificationCheckRequest>> GetLastCode( string code)
+ //   {
+ //       var user = await _manager.FindByEmailAsync(code);
 
            
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var random = new Random();
-            var code = new char[6];
-            for (int i = 0; i < code.Length; i++)
-            {
-                code[i] = chars[random.Next(chars.Length)];
-            }
-            return new string(code);
+ //           const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+ //           var random = new Random();
+ //           var code = new char[6];
+ //           for (int i = 0; i < code.Length; i++)
+ //           {
+ //               code[i] = chars[random.Next(chars.Length)];
+ //           }
+ //           return new string(code);
+ //   }
+
+    private static string GenerateVerificationCode()
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var random = new Random();
+        var code = new char[6];
+        for (int i = 0; i < code.Length; i++)
+        {
+            code[i] = chars[random.Next(chars.Length)];
         }
-        //    private readonly string _twilioAccountSid = "AC7c642c3fb5ee9dedf16ff749b8468019";
-        //    private readonly string _twilioAuthToken = "f7ea9cb7038100e5e0ac6dfc822cf7af";
-        //    private readonly string _verifyServiceSid = "ZSdf3f884f86ea92cf1d838aebd8f3f1d1";
+        return new string(code);
+    }
+
+    //    private readonly string _twilioAccountSid = "AC7c642c3fb5ee9dedf16ff749b8468019";
+    //    private readonly string _twilioAuthToken = "f7ea9cb7038100e5e0ac6dfc822cf7af";
+    //    private readonly string _verifyServiceSid = "ZSdf3f884f86ea92cf1d838aebd8f3f1d1";
 
 
-        //    [HttpPost("send")]
-        //    public IActionResult SendOtp([FromBody] VerificationRequest request)
-        //    {
-        //        // Generate a random OTP
-        //        var otp = GenerateRandomOtp();
+    //    [HttpPost("send")]
+    //    public IActionResult SendOtp([FromBody] VerificationRequest request)
+    //    {
+    //        // Generate a random OTP
+    //        var otp = GenerateRandomOtp();
 
-        //        // Initialize Twilio client
-        //        TwilioClient.Init(_twilioAccountSid, _twilioAuthToken);
+    //        // Initialize Twilio client
+    //        TwilioClient.Init(_twilioAccountSid, _twilioAuthToken);
 
-        //        try
-        //        {
-        //            // Send OTP via SMS using Twilio Verify service
-
-
-        //            var verification = VerificationResource.Create(to: request.PhoneNumber,channel: "sms",pathServiceSid: _verifyServiceSid);
-
-        //            return Ok("OTP sent successfully!");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return StatusCode(500, $"Failed to send OTP: {ex.Message}");
-        //        }
-        //    }
-        //    private string GenerateRandomOtp()
-        //    {
-        //        // Generate a random 6-digit OTP
-        //        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        //        var random = new Random();
-        //        var code = new char[6];
-        //        for (int i = 0; i < code.Length; i++)
-        //        {
-        //            code[i] = chars[random.Next(chars.Length)];
-        //        }
-        //        return new string(code);
-        //    }
-        //}
+    //        try
+    //        {
+    //            // Send OTP via SMS using Twilio Verify service
 
 
+    //            var verification = VerificationResource.Create(to: request.PhoneNumber,channel: "sms",pathServiceSid: _verifyServiceSid);
 
-        //    private readonly string _twilioAccountId = "AC7c642c3fb5ee9dedf16ff749b8468019";
-        //    private readonly string _twilioAuthToken = "f7ea9cb7038100e5e0ac6dfc822cf7af";
-        //    private readonly string _verifyServiceSid = "ZSdf3f884f86ea92cf1d838aebd8f3f1d1";
+    //            return Ok("OTP sent successfully!");
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            return StatusCode(500, $"Failed to send OTP: {ex.Message}");
+    //        }
+    //    }
+    //    private string GenerateRandomOtp()
+    //    {
+    //        // Generate a random 6-digit OTP
+    //        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    //        var random = new Random();
+    //        var code = new char[6];
+    //        for (int i = 0; i < code.Length; i++)
+    //        {
+    //            code[i] = chars[random.Next(chars.Length)];
+    //        }
+    //        return new string(code);
+    //    }
+    //}
 
-        //    [HttpPost("sent")]
-        //    public IActionResult StartVerification([FromBody] VerificationRequest request)
-        //    {
-        //        TwilioClient.Init(_twilioAccountId, _twilioAuthToken);
 
-        //        var verification = VerificationResource.Create(
-        //            to: request.PhoneNumber,
-        //            channel: "sms",
-        //            pathServiceSid: _verifyServiceSid
-        //        );
 
-        //        return Ok(new { VerificationSid = verification.Sid });
-        //    }
+    //    private readonly string _twilioAccountId = "AC7c642c3fb5ee9dedf16ff749b8468019";
+    //    private readonly string _twilioAuthToken = "f7ea9cb7038100e5e0ac6dfc822cf7af";
+    //    private readonly string _verifyServiceSid = "ZSdf3f884f86ea92cf1d838aebd8f3f1d1";
 
-        //    [HttpPost("check")]
-        //    public IActionResult CheckVerification([FromBody] VerificationCheckRequest request)
-        //    {
-        //        TwilioClient.Init(_twilioAccountId, _twilioAuthToken);
+    //    [HttpPost("sent")]
+    //    public IActionResult StartVerification([FromBody] VerificationRequest request)
+    //    {
+    //        TwilioClient.Init(_twilioAccountId, _twilioAuthToken);
 
-        //        var verificationCheck = VerificationCheckResource.Create(
-        //            to: request.PhoneNumber,
-        //            code: request.VerificationCode,
-        //            pathServiceSid: _verifyServiceSid
-        //        );
+    //        var verification = VerificationResource.Create(
+    //            to: request.PhoneNumber,
+    //            channel: "sms",
+    //            pathServiceSid: _verifyServiceSid
+    //        );
+
+    //        return Ok(new { VerificationSid = verification.Sid });
+    //    }
+
+    //    [HttpPost("check")]
+    //    public IActionResult CheckVerification([FromBody] VerificationCheckRequest request)
+    //    {
+    //        TwilioClient.Init(_twilioAccountId, _twilioAuthToken);
+
+    //        var verificationCheck = VerificationCheckResource.Create(
+    //            to: request.PhoneNumber,
+    //            code: request.VerificationCode,
+    //            pathServiceSid: _verifyServiceSid
+    //        );
 
 }
