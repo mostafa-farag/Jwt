@@ -71,7 +71,7 @@ namespace Jwt.Services
             var rolesList = await _userManager.GetRolesAsync(user);
             authmodel.isAuthenticated = true;
             authmodel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            authmodel.Email = user.Email;
+            authmodel.Email = user.Email!;
             authmodel.Username = user.Firstname + user.Lastname;
             authmodel.ExpiresOn = jwtSecurityToken.ValidTo;
             authmodel.Roles = rolesList.ToList();
