@@ -6,9 +6,13 @@ namespace Jwt.Models
 {
     public class AppDBContext:IdentityDbContext<ApplicationUser>
     {
+       
+
         public AppDBContext(DbContextOptions<AppDBContext> options):base(options)
         {   
         }
         public DbSet<Reports> Reports { get; set; }
+        public DbSet<VerificationCheckRequest> VerificationCheckRequest { get; set; }
+        
     }
 }

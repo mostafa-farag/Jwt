@@ -40,6 +40,11 @@ namespace Jwt.Controllers
                 return BadRequest(result.Message);
 
             return Ok(result);
-        }      
+        }
+        [HttpPut("UpdatePassword")]
+        public async Task<IActionResult> UpdatePasswordAsync()
+        {
+            return Ok();
+        }
     }
 }

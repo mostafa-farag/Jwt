@@ -2,7 +2,9 @@
 {
     public class VerificationCheckRequest
     {
-        public string PhoneNumber { get; set; }
+        public Guid Id { get; set; }
+        public string Email { get; set; }
         public string VerificationCode { get; set; }
+      
     }
 }
