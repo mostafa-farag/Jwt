@@ -1,13 +1,7 @@
 ﻿using Jwt.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Twilio.Rest.Verify.V2.Service;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
 using MimeKit;
 using MailKit.Net.Smtp;
-using static System.Net.WebRequestMethods;
-using System;
 
 namespace Jwt.Controllers
 {
@@ -29,15 +23,15 @@ namespace Jwt.Controllers
 
                 // Create a new email message
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("AppCurrencyCheker", "mostafafarag1233@gmail.com")); 
-                message.To.Add(new MailboxAddress("", request.Email)); 
+                message.From.Add(new MailboxAddress("AppCurrencyCheker", "mostafafarag1233@gmail.com"));
+                message.To.Add(new MailboxAddress("", request.Email));
                 message.Subject = "Email Verification Code";
                 message.Body = new TextPart("plain")
                 {
                     Text = $"Your verification code is: {verificationCode}"
                 };
 
-               
+
                 using (var client = new SmtpClient())
                 {
                     client.Connect(_smtpServer, _smtpPort);
@@ -57,7 +51,7 @@ namespace Jwt.Controllers
         private string GenerateVerificationCode()
         {
 
-           
+
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             var random = new Random();
             var code = new char[6];
