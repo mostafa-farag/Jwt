@@ -9,7 +9,8 @@ public class ResetPasswordService : IResetPasswordService
     private readonly string _smtpServer = "smtp-mail.outlook.com";
     private readonly int _smtpPort = 587;
     private readonly string _smtpUsername = "AppCurrencyCheker";
-    private readonly string _smtpPassword = "farag@752002";
+    private readonly string _googleEmail = "the.guru.se@gmail.com";
+    private readonly string _smtpPassword = "fxaxficnsbqifguc";
 
     private readonly UserManager<ApplicationUser> _userManager;
     public ResetPasswordService(UserManager<ApplicationUser> userManager)
@@ -36,7 +37,7 @@ public class ResetPasswordService : IResetPasswordService
 
         using var client = new MailKit.Net.Smtp.SmtpClient();
         client.Connect(_smtpServer, _smtpPort);
-        client.Authenticate(_smtpUsername, _smtpPassword);
+        client.Authenticate(_googleEmail, _smtpPassword);
         client.Send(message);
         client.Disconnect(true);
     }

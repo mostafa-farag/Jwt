@@ -31,7 +31,15 @@ namespace Jwt
             builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
-
+            builder.Services.AddCors(op =>
+            {
+                op.AddPolicy("Default", policy =>
+                {
+                    policy.AllowAnyHeader().
+                           AllowAnyMethod().
+                           AllowAnyOrigin();
+                });
+            });
 
             builder.Services.AddAuthentication(options =>
             {
@@ -68,11 +76,10 @@ namespace Jwt
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("Default");
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
